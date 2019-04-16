@@ -1,0 +1,63 @@
+# Recent-Trend prod index 
+function Recent-Trend prod(fileinput)
+
+if ~exist(fileinput,'file')
+    error('xls does not exist in search path of MATLAB');
+end
+
+[~,Inventor]=xlsread(fileinput,'sheet1','A2:A24018');
+[Year]=xlsread(fileinput,'sheet1','B2:B24018');
+[Num]=xlsread(fileinput,'sheet1','C2:C24018');
+
+n=1;
+A{1,1}=Inventor{1};
+Num_2016=0;
+Num_2015=0;
+Num_2014=0;
+Num_2013=0;
+switch Year(1)
+    case 2016
+        Num_2016=Num(1)/sqrt(Num(1));
+    case 2015
+        Num_2015=Num(1)/sqrt(Num(1));
+    case 2014
+        Num_2014=Num(1)/sqrt(Num(1));
+    case 2013
+        Num_2013=Num(1)/sqrt(Num(1));
+end
+
+for i=2:length(Inventor)
+    if strcmp(A{n,1},Inventor{i})
+        switch Year(i)
+            case 2016
+                Num_2016=Num(i)/sqrt(Num(i));
+            case 2015
+                Num_2015=Num(i)/sqrt(Num(i));
+            case 2014
+                Num_2014=Num(i)/sqrt(Num(i));
+            case 2013
+                Num_2013=Num(i)/sqrt(Num(i));
+        end
+    else
+       A{n,2}=Num_2016+Num_2015-Num_2014-Num_2013;
+       n=n+1;
+       A{n,1}=Inventor{i};
+       Num_2016=0;
+       Num_2015=0;
+       Num_2014=0;
+       Num_2013=0;
+       switch Year(i)
+            case 2016
+                Num_2016=Num(i)/sqrt(Num(i));
+            case 2015
+                Num_2015=Num(i)/sqrt(Num(i));
+            case 2014
+                Num_2014=Num(i)/sqrt(Num(i));
+            case 2013
+                Num_2013=Num(i)/sqrt(Num(i));
+       end
+    end
+end
+A{n,2}=Num_2016+Num_2015-Num_2014-Num_2013;
+
+xlswrite('Recent-Trend prod.xls',A);
