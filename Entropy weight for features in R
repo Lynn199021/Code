@@ -1,0 +1,39 @@
+install.packages("forecast")
+library(forecast)
+
+features <-read.csv("C:\\Program Files\\R\\R-3.5.2\\inventors.csv",header = T)
+features$inventor <- NULL
+min.max.norm <- function(x){
+  (x-min(x))/(max(x)-min(x))
+}
+
+features_1 <- apply(features[,c(2:14)],2,min.max.norm) 
+first1 <- function(data)
+{
+  x <- c(data)
+  for(i in 1:length(data))
+    x[i] = data[i]/sum(data[])
+  return(x)
+}
+dataframe <- apply(features_1,2,first1)
+
+first2 <- function(data)
+   {
+      x <- c(data)
+      for(i in 1:length(data)){
+          if(data[i] == 0){
+              x[i] = 0
+           }else{
+                x[i] = data[i] * log(data[i])
+             }
+        }
+     return(x)
+     }
+ dataframe1 <- apply(dataframe,2,first2)
+ k <- 1/log(length(dataframe1[,1]))
+ d <- -k * colSums(dataframe1)
+ d
+d <- 1-d
+w <- d/sum(d)
+w
+d
