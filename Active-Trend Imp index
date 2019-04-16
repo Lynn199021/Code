@@ -1,0 +1,105 @@
+# Active-Trend Imp
+function  Active-Trend Imp (fileinput)
+
+if ~exist(fileinput,'file')
+    error('xls does not exist in search path of MATLAB');
+end
+
+[~,Inventor]=xlsread(fileinput,'sheet1','A2:A24018');
+[Year]=xlsread(fileinput,'sheet1','B2:B24018');
+[Num]=xlsread(fileinput,'sheet1','C2:C24018');
+
+n=1;
+A{1,1}=Inventor{1};
+Num_2016=0;
+Num_2015=0;
+Num_2014=0;
+Num_2013=0;
+Num_2012=0;
+Num_2011=0;
+Num_2010=0;
+Num_2009=0;
+Num_2008=0;
+Num_2007=0;
+switch Year(1)
+    case 2016
+        Num_2016=Num(1)/sqrt(Num(1));
+    case 2015
+        Num_2015=Num(1)/sqrt(Num(1));
+    case 2014
+        Num_2014=Num(1)/sqrt(Num(1));
+    case 2013
+        Num_2013=Num(1)/sqrt(Num(1));
+    case 2012
+        Num_2012=Num(1)/sqrt(Num(1));
+    case 2011
+        Num_2011=Num(1)/sqrt(Num(1));
+    case 2010
+        Num_2010=Num(1)/sqrt(Num(1));
+    case 2009
+        Num_2009=Num(1)/sqrt(Num(1));
+    case 2008
+        Num_2008=Num(1)/sqrt(Num(1));
+    case 2007
+        Num_2007=Num(1)/sqrt(Num(1));
+end
+
+for i=2:length(Inventor)
+    if strcmp(A{n,1},Inventor{i})
+        switch Year(i)
+            case 2016
+                Num_2016=Num(i)/sqrt(Num(i));
+            case 2015
+                Num_2015=Num(i)/sqrt(Num(i));
+            case 2014
+                Num_2014=Num(i)/sqrt(Num(i));
+            case 2013
+                Num_2013=Num(i)/sqrt(Num(i));
+            case 2012
+                Num_2012=Num(i)/sqrt(Num(i));
+            case 2011
+                Num_2011=Num(i)/sqrt(Num(i));
+            case 2010
+                Num_2010=Num(i)/sqrt(Num(i));
+            case 2009
+                Num_2009=Num(i)/sqrt(Num(i));
+            case 2008
+                Num_2008=Num(i)/sqrt(Num(i));
+            case 2007
+                Num_2007=Num(i)/sqrt(Num(i));
+        end
+    else
+       A{n,2}=Num_2016+Num_2015+Num_2014+Num_2013+Num_2012-(Num_2011+Num_2010+Num_2009+Num_2008+Num_2007);
+       n=n+1;
+       A{n,1}=Inventor{i};
+       Num_2016=0;
+       Num_2015=0;
+       Num_2014=0;
+       Num_2013=0;
+        switch Year(i)
+            case 2016
+                Num_2016=Num(i)/sqrt(Num(i));
+            case 2015
+                Num_2015=Num(i)/sqrt(Num(i));
+            case 2014
+                Num_2014=Num(i)/sqrt(Num(i));
+            case 2013
+                Num_2013=Num(i)/sqrt(Num(i));
+            case 2012
+                Num_2012=Num(i)/sqrt(Num(i));
+            case 2011
+                Num_2011=Num(i)/sqrt(Num(i));
+            case 2010
+                Num_2010=Num(i)/sqrt(Num(i));
+            case 2009
+                Num_2009=Num(i)/sqrt(Num(i));
+            case 2008
+                Num_2008=Num(i)/sqrt(Num(i));
+            case 2007
+                Num_2007=Num(i)/sqrt(Num(i));
+        end
+    end
+end
+A{n,2}=Num_2016+Num_2015+Num_2014+Num_2013+Num_2012-(Num_2011+Num_2010+Num_2009+Num_2008+Num_2007);
+
+xlswrite(' Active-Trend Imp.xls',A);
